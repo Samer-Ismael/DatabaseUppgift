@@ -7,6 +7,7 @@ public class MongoDB {
     private String server;
     private String port;
 
+    // Constructor will set default values if user does not provide them
     public MongoDB(String DBName, String server, String port) {
         if (server.isEmpty()) {
             this.server = "localhost";
@@ -23,29 +24,34 @@ public class MongoDB {
         }else {
             this.DBName = DBName;
         }
+        connect(); // Make connection when object is created
+    }
+    // Make connection to MongoDB
+    private void connect() {
+        String uri = "mongodb://" + server + ":" + port;
 
-        String url = "mongodb://" + server + ":" + port + "/" + DBName;
+
+
+    }
+    // CRUD methods
+    public void addToDB() {
+
+
+    }
+    public void readFromDB() {
+
+
+    }
+    public void updateDB() {
+
+
+    }
+    public void deleteFromDB() {
+
+
+    }
 
 
 
-    }
 
-    public String getDBName() {
-        return DBName;
-    }
-    public void setDBName(String DBName) {
-        this.DBName = DBName;
-    }
-    public String getServer() {
-        return server;
-    }
-    public void setServer(String server) {
-        this.server = server;
-    }
-    public String getPort() {
-        return port;
-    }
-    public void setPort(String port) {
-        this.port = port;
-    }
 }
