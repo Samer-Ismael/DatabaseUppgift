@@ -3,6 +3,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 public class MongoDB {
 
+    // https://youtube.com/shorts/6DYjWGfvM3s?feature=share
+
     private String DBName;
     private String server;
     private String port;
@@ -26,10 +28,9 @@ public class MongoDB {
         }
         connect(); // Make connection when object is created
     }
-    // Make connection to MongoDB
+    // Make connection to MongoDB, private method because we only use it in this class
     private void connect() {
-        String uri = "mongodb://" + server + ":" + port;
-
+        //String uri = "mongodb://" + server + ":" + port;
 
 
     }
