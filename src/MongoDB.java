@@ -1,11 +1,17 @@
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
 public class MongoDB {
 
+    private MongoDatabase db;
+    private MongoClient client;
     private String DBName;
     private String server;
     private String port;
+    private MongoCollection<Document> collection;
 
     // Constructor will set default values if user does not provide them
     public MongoDB(String DBName, String server, String port) {
@@ -28,35 +34,26 @@ public class MongoDB {
     }
     // Make connection to MongoDB, private method because we only use it in this class
     private void connect() {
-        String uri = "mongodb://" + server + ":" + port;
+        String connection = "mongodb://" + server + ":" + port;
         try {
-            MongoClient client = new MongoClient(new MongoClientURI(uri));
-            MongoDatabase db = client.getDatabase(DBName);
+            MongoClientURI clientURI = new MongoClientURI(connection);
+            this.client = new MongoClient(clientURI);
+            this.db = client.getDatabase(DBName);
             System.out.println("Connected to MongoDB");
         } catch (Exception e) {
-            System.out.println("Error connecting to MongoDB");
+            System.out.println("Error!" + e.getMessage());
         }
-
     }
-    // CRUD methods
-    public void addToDB() {
-
-
+    public MongoDatabase getDb() {
+        return db;
     }
-    public void readFromDB() {
-
-
+    public MongoCollection<Document> createCollection(String collectionName) {
+        try {
+            db.createCollection(collectionName);
+            System.out.println("Collection " + collectionName + " created successfully");
+        } catch (Exception e) {
+            // if collection already exists, we do nothing so no one gets hurt :)
+        }
+        return this.collection = db.getCollection(collectionName);
     }
-    public void updateDB() {
-
-
-    }
-    public void deleteFromDB() {
-
-
-    }
-
-
-
-
 }

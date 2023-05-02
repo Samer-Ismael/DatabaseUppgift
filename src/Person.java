@@ -1,5 +1,9 @@
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
 public abstract class Person {
 
+    private String collectionName;
     private String name;
     private String address;
     private int age;
@@ -8,6 +12,15 @@ public abstract class Person {
         this.name = name;
         this.address = address;
         this.age = age;
+        this.collectionName = "";
+    }
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
     }
 
     public String getName() {
@@ -33,4 +46,11 @@ public abstract class Person {
     public void setAge(int age) {
         this.age = age;
     }
+
+
+    public abstract void addToDB(MongoCollection<Document> collection, Person person);
+    public abstract void readFromDB(MongoCollection<Document> collection, String name);
+    public abstract void updateDB(MongoCollection<Document> collection, Person person);
+    public abstract void deleteFromDB(MongoCollection<Document> collection, Person person);
+
 }
