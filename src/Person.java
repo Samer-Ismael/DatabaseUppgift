@@ -42,6 +42,7 @@ public abstract class Person {
     public abstract void readFromDB(MongoCollection<Document> collection, String name);
     public abstract void updateDB(MongoCollection<Document> collection, Person person);
     public abstract void deleteFromDB(MongoCollection<Document> collection, String name);
+    public abstract void allFromDB(MongoCollection<Document> collection);
 
 
 }

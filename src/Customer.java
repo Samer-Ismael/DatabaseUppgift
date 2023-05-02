@@ -1,8 +1,8 @@
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-import java.util.Collection;
 
 public class Customer extends Person {
 
@@ -26,13 +26,21 @@ public class Customer extends Person {
     @Override
     public void addToDB(MongoCollection<Document> collection, Person customer) {
 
+        if (customer instanceof Customer) {
+            customerNumber = ((Customer) customer).getCustomerNumber();
+        }
+        BasicDBObject test = new BasicDBObject();
+        if (collection.countDocuments(test) > 0) {
+            System.out.println("Costumer already exists");
+            return;
+        }
         Document newCustomer = new Document("name", customer.getName())
                 .append("address", customer.getAddress())
                 .append("age", customer.getAge())
                 .append("customerNumber", customerNumber);
-
         try {
             collection.insertOne(newCustomer);
+            System.out.println("Customer added");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -45,7 +53,6 @@ public class Customer extends Person {
         for (Document customer : customers) {
             System.out.println(customer.toJson());
         }
-
     }
     @Override
     public void updateDB(MongoCollection<Document> collection, Person customer) {
@@ -56,7 +63,7 @@ public class Customer extends Person {
                 .append("customerNumber", customerNumber);
         try {
             collection.updateOne(new Document("name", customer.getName()), new Document("$set", updateCustomer));
-
+            System.out.println("Customer updated");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -68,12 +75,20 @@ public class Customer extends Person {
         Document deleteCustomer = new Document("name", name);
         try {
             collection.deleteOne(deleteCustomer);
+            System.out.println("Customer deleted");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
 
+    @Override
+    public void allFromDB(MongoCollection<Document> collection) {
+        FindIterable<Document> customers = collection.find();
+        for (Document customer : customers) {
+            System.out.println(customer.toJson());
+        }
+
+    }
 
 
 }
