@@ -1,6 +1,7 @@
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 
 public class Worker extends Person {
@@ -24,20 +25,16 @@ public class Worker extends Person {
     @Override
     public void addToDB(MongoCollection<Document> collection, Person worker) {
 
-        if (worker instanceof Customer) {
-            workerNumber = ((Customer) worker).getCustomerNumber();
-        }
-        BasicDBObject test = new BasicDBObject();
-        if (collection.countDocuments(test) > 0) {
-            System.out.println("Costumer already exists");
-            return;
+        if (worker instanceof Worker) {
+            workerNumber = ((Worker) worker).getWorkerNumber();
         }
 
         Document newWorker = new Document("name", worker.getName())
                 .append("address", worker.getAddress())
                 .append("age", worker.getAge())
-                .append("employeeNumber", workerNumber);
+                .append("workerNumber", workerNumber);
         try {
+            collection.createIndex(new Document("name", 1), new IndexOptions().unique(true));
             collection.insertOne(newWorker);
             System.out.println("Worker added");
         } catch (Exception e) {

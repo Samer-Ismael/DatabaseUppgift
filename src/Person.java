@@ -45,5 +45,4 @@ public abstract class Person {
     public abstract void deleteFromDB(MongoCollection<Document> collection, String name);
     public abstract void allFromDB(MongoCollection<Document> collection);
 
-
 }

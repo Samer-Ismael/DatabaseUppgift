@@ -1,6 +1,10 @@
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class MainManu {
 
@@ -14,11 +18,13 @@ public class MainManu {
         MongoCollection<Document> workerCollection = mongoDB.createCollection("worker");
 
 
+        System.out.println("------------------------------------------");
         System.out.println("Do you want to work with customers or workers?");
         System.out.println("1. Customers");
         System.out.println("2. Workers");
         System.out.println("3. Advanced search");
         System.out.println("4. Exit");
+        System.out.println("------------------------------------------");
         try { Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
 
@@ -41,10 +47,36 @@ public class MainManu {
 
     private void advancedSearch(Person customer, Person worker, MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
 
+        try {
+            System.out.println("Enter search word: ");
+            Scanner scan = new Scanner(System.in);
+            String search = scan.nextLine();
+            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
+            Document query = new Document();
+            query.put("$or", List.of(
+                    new Document("name", pattern),
+                    new Document("address", pattern),
+                    new Document("age", pattern),
+                    new Document("customerNumber", pattern),
+                    new Document("employeeNumber", pattern)
+            ));
+
+
+            FindIterable<Document> result = customerCollection.find(query);
+            for (Document obj : result) {
+                System.out.println("Customer: " + obj.toJson());
+            }
+
+            FindIterable<Document> result2 = workerCollection.find(query);
+            for (Document obj : result2) {
+                System.out.println("Worker: " + obj.toJson());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
     }
-
     // Methods for asking CRUD operations
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
         int CRUD = askCRUD();
@@ -68,7 +100,6 @@ public class MainManu {
             worker.allFromDB(workerCollection);
         }
     }
-
     // Methods for asking CRUD operations
     private void customerCRUDAsking(Person customer, MongoCollection<Document> customerCollection) {
         int CRUD = askCRUD();
@@ -92,7 +123,6 @@ public class MainManu {
             customer.allFromDB(customerCollection);
         }
     }
-
     // Method for building object of Customer class from user input
     public Customer getCustomerInfo() {
         try {Scanner scanner = new Scanner(System.in);

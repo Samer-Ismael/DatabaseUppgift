@@ -45,6 +45,7 @@ public class MongoDB {
         return db;
     }
 
+
     // Method to connect to the database
     private void connect() {
         String connection = "mongodb://" + server + ":" + port;
@@ -57,7 +58,6 @@ public class MongoDB {
             System.out.println("Error!" + e.getMessage());
         }
     }
-
     // Method to create a collection in the database
     public MongoCollection<Document> createCollection(String collectionName) {
         try {
