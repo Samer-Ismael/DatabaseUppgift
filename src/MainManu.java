@@ -45,6 +45,7 @@ public class MainManu {
 
     }
 
+    // Methods for asking CRUD operations
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
         int CRUD = askCRUD();
         if (CRUD == 1) {
@@ -67,6 +68,8 @@ public class MainManu {
             worker.allFromDB(workerCollection);
         }
     }
+
+    // Methods for asking CRUD operations
     private void customerCRUDAsking(Person customer, MongoCollection<Document> customerCollection) {
         int CRUD = askCRUD();
         if (CRUD == 1) {
@@ -89,6 +92,8 @@ public class MainManu {
             customer.allFromDB(customerCollection);
         }
     }
+
+    // Method for building object of Customer class from user input
     public Customer getCustomerInfo() {
         try {Scanner scanner = new Scanner(System.in);
         System.out.println("Enter name: ");
@@ -107,6 +112,7 @@ public class MainManu {
             return null;
         }
     }
+    // Method for building object of Worker class from user input
     public Worker getWorkerInfo() {
         try {Scanner scanner = new Scanner(System.in);
         System.out.println("Enter name: ");
@@ -125,6 +131,7 @@ public class MainManu {
             return null;
         }
     }
+    // Method for asking user which CRUD operation the user wants to do
     public int askCRUD() {
         try {Scanner scanner = new Scanner(System.in);
         System.out.println("1. Add");

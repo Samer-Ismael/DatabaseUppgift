@@ -20,7 +20,7 @@ public class Worker extends Person {
     }
 
 
-
+    // Methods from the abstract class Person
     @Override
     public void addToDB(MongoCollection<Document> collection, Person worker) {
 

@@ -38,6 +38,7 @@ public abstract class Person {
     }
 
 
+    // Abstract methods for the subclasses to implement
     public abstract void addToDB(MongoCollection<Document> collection, Person person);
     public abstract void readFromDB(MongoCollection<Document> collection, String name);
     public abstract void updateDB(MongoCollection<Document> collection, Person person);

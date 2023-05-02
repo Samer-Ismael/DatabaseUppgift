@@ -3,7 +3,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-
 public class Customer extends Person {
 
     private String customerNumber;
@@ -21,6 +20,7 @@ public class Customer extends Person {
     }
 
 
+    // Methods from the abstract class Person
     @Override
     public void addToDB(MongoCollection<Document> collection, Person customer) {
 
@@ -58,7 +58,6 @@ public class Customer extends Person {
         }catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
     @Override
     public void updateDB(MongoCollection<Document> collection, Person customer) {
@@ -93,6 +92,4 @@ public class Customer extends Person {
         }
 
     }
-
-
 }

@@ -13,15 +13,7 @@ public class MongoDB {
     private String server;
     private String port;
 
-    public String getCollectionName() {
-        return collectionName;
-    }
-
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
-    }
-
-    // Constructor will set default values if user does not provide them
+    // Constructor with default values
     public MongoDB(String DBName, String server, String port) {
         if (server.isEmpty()) {
             this.server = "localhost";
@@ -40,7 +32,20 @@ public class MongoDB {
         }
         connect(); // Make connection when object is created
     }
-    // Make connection to MongoDB, private method because we only use it in this class
+
+
+    // Getters and setters for the class
+    public String getCollectionName() {
+        return collectionName;
+    }
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
+    public MongoDatabase getDb() {
+        return db;
+    }
+
+    // Method to connect to the database
     private void connect() {
         String connection = "mongodb://" + server + ":" + port;
         try {
@@ -53,10 +58,10 @@ public class MongoDB {
         }
     }
 
+    // Method to create a collection in the database
     public MongoCollection<Document> createCollection(String collectionName) {
         try {
             db.createCollection(collectionName);
-
             System.out.println("Collection " + collectionName + " created successfully");
         } catch (Exception e) {
             // if collection already exists, we do nothing so no one gets hurt :)
@@ -64,7 +69,4 @@ public class MongoDB {
         return this.collection = db.getCollection(collectionName);
     }
 
-    public MongoDatabase getDb() {
-        return db;
-    }
 }
