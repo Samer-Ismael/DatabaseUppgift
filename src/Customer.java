@@ -15,21 +15,21 @@ public class Customer extends Person {
     public String getCustomerNumber() {
         return customerNumber;
     }
-
     public void setCustomerNumber(String customerNumber) {
         this.customerNumber = customerNumber;
     }
-
     @Override
     public void addToDB(MongoCollection<Document> collection, Person customer) {
-        Document doc = new Document("name", customer.getName())
-                .append("adress", customer.getAddress())
-                .append("age", customer.getAge())
-                .append("customerNumber", getCustomerNumber());
-        collection.insertOne(doc);
-
+        try {
+            Document doc = new Document("name", customer.getName())
+                    .append("adress", customer.getAddress())
+                    .append("age", customer.getAge())
+                    .append("customerNumber", getCustomerNumber());
+            collection.insertOne(doc);
+        } catch (Exception e) {
+            System.out.println("Customer already exists");
+        }
     }
-
     @Override
     public void readFromDB(MongoCollection<Document> collection, String customer) {
 
@@ -55,18 +55,24 @@ public class Customer extends Person {
     }
     @Override
     public void updateDB(MongoCollection<Document> collection, Person customer) {
-        Document filter = new Document("name", customer.getName());
-        Document update = new Document("$set", new Document("name", customer.getName())
-                .append("adress", customer.getAddress())
-                .append("age", customer.getAge())
-                .append("employeeNumber", getCustomerNumber()));
-        collection.updateOne(filter, update);
+        try {
+            Document filter = new Document("name", customer.getName());
+            Document update = new Document("$set", new Document("name", customer.getName())
+                    .append("adress", customer.getAddress())
+                    .append("age", customer.getAge())
+                    .append("employeeNumber", getCustomerNumber()));
+            collection.updateOne(filter, update);
+        } catch (Exception e) {
+            System.out.println( "Customer already exists");
+        }
     }
-
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, Person customer) {
-
-        Document filter = new Document("name", customer.getName());
-        collection.deleteOne(filter);
+        try {
+            Document filter = new Document("name", customer.getName());
+            collection.deleteOne(filter);
+        } catch (Exception e) {
+            System.out.println("Customer not found");
+        }
     }
 }

@@ -23,12 +23,15 @@ public class Worker extends Person {
 
     @Override
     public void addToDB(MongoCollection<Document> collection, Person worker) {
-        Document doc = new Document("name", worker.getName())
-                .append("adress", worker.getAddress())
-                .append("age", worker.getAge())
-                .append("employeeNumber", getEmployeeNumber());
-        collection.insertOne(doc);
-
+        try {
+            Document doc = new Document("name", worker.getName())
+                    .append("adress", worker.getAddress())
+                    .append("age", worker.getAge())
+                    .append("employeeNumber", getEmployeeNumber());
+            collection.insertOne(doc);
+        } catch (Exception e) {
+            System.out.println( "Worker already exists");
+        }
     }
 
     @Override
@@ -57,17 +60,25 @@ public class Worker extends Person {
 
     @Override
     public void updateDB(MongoCollection<Document> collection, Person worker) {
-        Document filter = new Document("name", worker.getName());
-        Document update = new Document("$set", new Document("name", worker.getName())
-                .append("address", worker.getAddress())
-                .append("age", worker.getAge())
-                .append("employeeNumber", getEmployeeNumber())); // corrected here
-        collection.updateOne(filter, update);
+        try {
+            Document filter = new Document("name", worker.getName());
+            Document update = new Document("$set", new Document("name", worker.getName())
+                    .append("address", worker.getAddress())
+                    .append("age", worker.getAge())
+                    .append("employeeNumber", getEmployeeNumber())); // corrected here
+            collection.updateOne(filter, update);
+        } catch (Exception e) {
+            System.out.println("Worker not found");
+        }
     }
 
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, Person worker) {
-        Document filter = new Document("name", worker.getName());
-        collection.deleteOne(filter);
+        try {
+            Document filter = new Document("name", worker.getName());
+            collection.deleteOne(filter);
+        } catch (Exception e) {
+            System.out.println("Worker not found");
+        }
     }
 }
