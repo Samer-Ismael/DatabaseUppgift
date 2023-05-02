@@ -15,10 +15,11 @@ public class Worker extends Person {
     public String getWorkerNumber() {
         return workerNumber;
     }
-
     public void setWorkerNumber(String workerNumber) {
         this.workerNumber = workerNumber;
     }
+
+
 
     @Override
     public void addToDB(MongoCollection<Document> collection, Person worker) {
@@ -43,16 +44,23 @@ public class Worker extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     @Override
     public void readFromDB(MongoCollection<Document> collection, String name) {
 
-        FindIterable<Document> workers = collection.find(new Document("name", name));
-        for (Document worker : workers) {
-            System.out.println(worker.toJson());
+        try {
+            FindIterable<Document> workers = collection.find(new Document("name", name));
+            if (collection.countDocuments() == 0) {
+                System.out.println("No workers found");
+                return;
+            }
+            for (Document worker : workers) {
+                System.out.println(worker.toJson());
+            }
+        }catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("Worker not found");
         }
     }
-
     @Override
     public void updateDB(MongoCollection<Document> collection, Person worker) {
 
@@ -67,7 +75,6 @@ public class Worker extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, String name) {
 
@@ -80,7 +87,6 @@ public class Worker extends Person {
         }
 
     }
-
     @Override
     public void allFromDB(MongoCollection<Document> collection) {
         FindIterable<Document> workers = collection.find();

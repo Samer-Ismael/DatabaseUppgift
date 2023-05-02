@@ -16,11 +16,9 @@ public class Customer extends Person {
     public String getCustomerNumber() {
         return customerNumber;
     }
-
     public void setCustomerNumber(String customerNumber) {
         this.customerNumber = customerNumber;
     }
-
 
 
     @Override
@@ -45,14 +43,22 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     @Override
     public void readFromDB(MongoCollection<Document> collection, String name) {
 
-        FindIterable<Document> customers = collection.find(new Document("name", name));
-        for (Document customer : customers) {
-            System.out.println(customer.toJson());
+        try {
+            FindIterable<Document> customers = collection.find(new Document("name", name));
+            if (collection.countDocuments() == 0) {
+                System.out.println("No customers found");
+                return;
+            }
+            for (Document customer : customers) {
+                System.out.println(customer.toJson());
+            }
+        }catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
+
     }
     @Override
     public void updateDB(MongoCollection<Document> collection, Person customer) {
@@ -68,7 +74,6 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, String name) {
 
@@ -80,7 +85,6 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
     @Override
     public void allFromDB(MongoCollection<Document> collection) {
         FindIterable<Document> customers = collection.find();
