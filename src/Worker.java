@@ -10,7 +10,6 @@ public class Worker extends Person {
     public Worker(String name, String address, int age, String employeeNumber) {
         super(name, address, age);
         this.employeeNumber = employeeNumber;
-        super.setCollectionName("workers");
     }
 
     public String getEmployeeNumber() {
@@ -23,62 +22,50 @@ public class Worker extends Person {
 
     @Override
     public void addToDB(MongoCollection<Document> collection, Person worker) {
+
+        Document newWorker = new Document("name", worker.getName())
+                .append("address", worker.getAddress())
+                .append("age", worker.getAge())
+                .append("employeeNumber", employeeNumber);
         try {
-            Document doc = new Document("name", worker.getName())
-                    .append("adress", worker.getAddress())
-                    .append("age", worker.getAge())
-                    .append("employeeNumber", getEmployeeNumber());
-            collection.insertOne(doc);
+            collection.insertOne(newWorker);
         } catch (Exception e) {
-            System.out.println( "Worker already exists");
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     @Override
-    public void readFromDB(MongoCollection<Document> collection, String worker) {
+    public void readFromDB(MongoCollection<Document> collection, String name) {
 
-        try{
-            Document filter = new Document("name", worker);
-            FindIterable<Document> iterable = collection.find(filter);
-            Document workerDocument = iterable.first();
-
-            if (workerDocument != null) {
-                String workerName = workerDocument.getString("name");
-                int workerAge = workerDocument.getInteger("age");
-                String workerAddress = workerDocument.getString("adress");
-                String EmployeeNumber = workerDocument.getString("employeeNumber");
-
-                System.out.println("Name: " + workerName);
-                System.out.println("Age: " + workerAge);
-                System.out.println("Address: " + workerAddress);
-                System.out.println("Worker number: " + EmployeeNumber);
-            }
-        }catch (Exception e) {
-            System.out.println("Worker not found");
+        FindIterable<Document> workers = collection.find(new Document("name", name));
+        for (Document worker : workers) {
+            System.out.println(worker.toJson());
         }
     }
 
     @Override
     public void updateDB(MongoCollection<Document> collection, Person worker) {
+
+        Document updateWorker = new Document("name", worker.getName())
+                .append("address", worker.getAddress())
+                .append("age", worker.getAge())
+                .append("employeeNumber", employeeNumber);
         try {
-            Document filter = new Document("name", worker.getName());
-            Document update = new Document("$set", new Document("name", worker.getName())
-                    .append("address", worker.getAddress())
-                    .append("age", worker.getAge())
-                    .append("employeeNumber", getEmployeeNumber())); // corrected here
-            collection.updateOne(filter, update);
+            collection.updateOne(new Document("name", worker.getName()), new Document("$set", updateWorker));
         } catch (Exception e) {
-            System.out.println("Worker not found");
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     @Override
-    public void deleteFromDB(MongoCollection<Document> collection, Person worker) {
+    public void deleteFromDB(MongoCollection<Document> collection, String name) {
+
+        Document deleteWorker = new Document("name", name);
         try {
-            Document filter = new Document("name", worker.getName());
-            collection.deleteOne(filter);
+            collection.deleteOne(deleteWorker);
         } catch (Exception e) {
-            System.out.println("Worker not found");
+            System.out.println("Error: " + e.getMessage());
         }
+
     }
 }

@@ -1,5 +1,4 @@
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -7,11 +6,20 @@ import org.bson.Document;
 public class MongoDB {
 
     private MongoDatabase db;
+    private MongoCollection<Document> collection;
+    private String collectionName;
     private MongoClient client;
     private String DBName;
     private String server;
     private String port;
-    private MongoCollection<Document> collection;
+
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
 
     // Constructor will set default values if user does not provide them
     public MongoDB(String DBName, String server, String port) {
@@ -40,20 +48,23 @@ public class MongoDB {
             this.client = new MongoClient(clientURI);
             this.db = client.getDatabase(DBName);
             System.out.println("Connected to MongoDB");
-        } catch (Exception e) {
+        } catch (MongoException e) {
             System.out.println("Error!" + e.getMessage());
         }
     }
-    public MongoDatabase getDb() {
-        return db;
-    }
+
     public MongoCollection<Document> createCollection(String collectionName) {
         try {
             db.createCollection(collectionName);
+
             System.out.println("Collection " + collectionName + " created successfully");
         } catch (Exception e) {
             // if collection already exists, we do nothing so no one gets hurt :)
         }
         return this.collection = db.getCollection(collectionName);
+    }
+
+    public MongoDatabase getDb() {
+        return db;
     }
 }
