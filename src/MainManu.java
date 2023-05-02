@@ -17,59 +17,80 @@ public class MainManu {
         System.out.println("Do you want to work with customers or workers?");
         System.out.println("1. Customers");
         System.out.println("2. Workers");
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-        if (choice == 1) {
-            int CRUD = askCRUD();
-            if (CRUD == 1) {
-                customer = getCustomerInfo();
-                customer.addToDB(customerCollection, customer);
-            } else if (CRUD == 2) {
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Enter name: ");
-                String name = scanner1.nextLine();
-                customer.readFromDB(customerCollection, name);
-            } else if (CRUD == 3) {
-                customer = getCustomerInfo();
-                customer.updateDB(customerCollection, customer);
-            } else if (CRUD == 4) {
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Enter name: ");
-                String name = scanner1.nextLine();
-                customer.deleteFromDB(customerCollection, name);
-            } else if (CRUD == 5) {
-                customer.allFromDB(customerCollection);
+        System.out.println("3. Advanced search");
+        System.out.println("4. Exit");
+        try { Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                customerCRUDAsking(customer, customerCollection);
             }
-
-        }
-        if (choice == 2) {
-            int CRUD = askCRUD();
-            if (CRUD == 1) {
-                worker = getWorkerInfo();
-                worker.addToDB(workerCollection, worker);
-            } else if (CRUD == 2) {
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Enter name: ");
-                String name = scanner1.nextLine();
-                worker.readFromDB(workerCollection, name);
-            } else if (CRUD == 3) {
-                worker = getWorkerInfo();
-                worker.updateDB(workerCollection, worker);
-            } else if (CRUD == 4) {
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Enter name: ");
-                String name = scanner1.nextLine();
-                worker.deleteFromDB(workerCollection, name);
-            } else if (CRUD == 5) {
-                worker.allFromDB(workerCollection);
+            if (choice == 2) {
+                workerCRUDAsking(worker, workerCollection);
             }
-
-
+            if (choice == 3) {
+                advancedSearch(customer, worker, customerCollection, workerCollection);
+            }
+            if (choice == 4) {
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            System.out.println("Wrong input");
         }
     }
 
+    private void advancedSearch(Person customer, Person worker, MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
+
+
+
+    }
+
+    private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
+        int CRUD = askCRUD();
+        if (CRUD == 1) {
+            worker = getWorkerInfo();
+            worker.addToDB(workerCollection, worker);
+        } else if (CRUD == 2) {
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("Enter name: ");
+            String name = scanner1.nextLine();
+            worker.readFromDB(workerCollection, name);
+        } else if (CRUD == 3) {
+            worker = getWorkerInfo();
+            worker.updateDB(workerCollection, worker);
+        } else if (CRUD == 4) {
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("Enter name: ");
+            String name = scanner1.nextLine();
+            worker.deleteFromDB(workerCollection, name);
+        } else if (CRUD == 5) {
+            worker.allFromDB(workerCollection);
+        }
+    }
+    private void customerCRUDAsking(Person customer, MongoCollection<Document> customerCollection) {
+        int CRUD = askCRUD();
+        if (CRUD == 1) {
+            customer = getCustomerInfo();
+            customer.addToDB(customerCollection, customer);
+        } else if (CRUD == 2) {
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("Enter name: ");
+            String name = scanner1.nextLine();
+            customer.readFromDB(customerCollection, name);
+        } else if (CRUD == 3) {
+            customer = getCustomerInfo();
+            customer.updateDB(customerCollection, customer);
+        } else if (CRUD == 4) {
+            Scanner scanner1 = new Scanner(System.in);
+            System.out.println("Enter name: ");
+            String name = scanner1.nextLine();
+            customer.deleteFromDB(customerCollection, name);
+        } else if (CRUD == 5) {
+            customer.allFromDB(customerCollection);
+        }
+    }
     public Customer getCustomerInfo() {
-        Scanner scanner = new Scanner(System.in);
+        try {Scanner scanner = new Scanner(System.in);
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
         System.out.println("Enter address: ");
@@ -81,9 +102,13 @@ public class MainManu {
         customerNumber = scanner.nextLine();
         Person customer = new Customer(name, address, age, customerNumber);
         return (Customer) customer;
+        } catch (Exception e) {
+            System.out.println("Wrong input");
+            return null;
+        }
     }
     public Worker getWorkerInfo() {
-        Scanner scanner = new Scanner(System.in);
+        try {Scanner scanner = new Scanner(System.in);
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
         System.out.println("Enter address: ");
@@ -95,9 +120,13 @@ public class MainManu {
         workerNumber = scanner.nextLine();
         Person worker = new Worker(name, address, age, workerNumber);
         return (Worker) worker;
+        } catch (Exception e) {
+            System.out.println("Wrong input");
+            return null;
+        }
     }
     public int askCRUD() {
-        Scanner scanner = new Scanner(System.in);
+        try {Scanner scanner = new Scanner(System.in);
         System.out.println("1. Add");
         System.out.println("2. Read");
         System.out.println("3. Update");
@@ -105,8 +134,9 @@ public class MainManu {
         System.out.println("5. Show all");
         int choice = scanner.nextInt();
         return choice;
+        } catch (Exception e) {
+            System.out.println("Wrong input");
+            return 0;
+        }
     }
-
-
-
 }
