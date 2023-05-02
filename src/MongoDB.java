@@ -3,8 +3,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 public class MongoDB {
 
-    // https://youtube.com/shorts/6DYjWGfvM3s?feature=share
-
     private String DBName;
     private String server;
     private String port;
@@ -30,8 +28,14 @@ public class MongoDB {
     }
     // Make connection to MongoDB, private method because we only use it in this class
     private void connect() {
-        //String uri = "mongodb://" + server + ":" + port;
-
+        String uri = "mongodb://" + server + ":" + port;
+        try {
+            MongoClient client = new MongoClient(new MongoClientURI(uri));
+            MongoDatabase db = client.getDatabase(DBName);
+            System.out.println("Connected to MongoDB");
+        } catch (Exception e) {
+            System.out.println("Error connecting to MongoDB");
+        }
 
     }
     // CRUD methods
