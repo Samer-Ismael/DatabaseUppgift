@@ -13,6 +13,6 @@ De CRUD-metoder jag har implementerat är följande:
 
 två metoder som konverterar ett objekt till en Document (dokument) eller vice versa och sedan skickar eller tar imot dokumentet till/från databasen genom att använda insertOne(), find(), updateOne() eller deleteOne()-metoder beroende på användarens val.
 
-Eftersom sökningen via nummer eller ålder (Väldigt krånglig) och måste vara exakt och inte inkludera personer med samma siffror i sina åldrar eller nummer, valde jag att skapa ett nytt dokument och söka efter workerNumber eller customerNumber beroende på användarens val.
+Eftersom sökningen via nummer eller ålder (Väldigt krånglig) och måste vara exakt och inte inkludera personer med samma siffror i sina åldrar eller nummer, valde jag att skapa ett nytt dokument och söka efter workerNumber eller customerNumber beroende på användarens val.No regex here :)
 
 Sökningen via namn och adress använder en regex-kod ".*" som tar en stränginput och söker efter allt som matchar i databasen.
