@@ -9,6 +9,18 @@ import org.bson.Document;
 import java.util.ArrayList;
 public class MongoDBFacade {
 
+    // Jag försökte att koppla till databas på detta sätt men jag lyckades inte få det fungera.
+    // Jag har kommenterat ut koden för att inte få error när jag kör programmet.
+    // Problemet är på
+    //        MongoClientSettings settings = MongoClientSettings.builder()
+    //                .applyConnectionString(new ConnectionString(conn))
+    //                .serverApi(serverApi)
+    //                .build();
+    //som vill inte fungera och har testat alla möjliga drivers.
+
+    // Jag kopplar istället till local databasen för att få programmet att fungera.
+
+
     MongoClient client;
     MongoDatabase db;
     MongoCollection<Document> collection;
@@ -26,20 +38,6 @@ public class MongoDBFacade {
     public MongoDBFacade(){
 
         //connect();
-    }
-
-    public void insertOne(Document doc){
-        collection.insertOne(doc);
-    }
-    public void find () {
-
-        Document doc = new Document("name", "John");
-        FindIterable<Document> result = collection.find(doc);
-
-        ArrayList<Document> list = new ArrayList<>();
-        for (Document d : result) {
-
-        }
     }
 /*
     public void Connect(){
