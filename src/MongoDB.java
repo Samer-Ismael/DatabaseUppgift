@@ -85,12 +85,8 @@ public class MongoDB {
         try {
             Scanner scan = new Scanner(System.in);
             int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
+            Document doc = new Document("workerNumber",search);
 
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("workerNumber", pattern)
-            ));
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
                 worker = new Worker("", "", 0, 0, "");
@@ -108,12 +104,8 @@ public class MongoDB {
         try {
             Scanner scan = new Scanner(System.in);
             int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("customerNumber", pattern)
-            ));
+            Document doc = new Document("customerNumber", search);
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
                 customer = new Customer("", "", 0, 0, "");
@@ -162,12 +154,9 @@ public class MongoDB {
         try {
             Scanner scan = new Scanner(System.in);
             int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("age", pattern)
-            ));
+            Document doc = new Document("age", search);
+
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
                 customer = new Customer("", "", 0, 0, "");
