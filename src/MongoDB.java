@@ -53,7 +53,6 @@ public class MongoDB {
             MongoClientURI clientURI = new MongoClientURI(connection);
             this.client = new MongoClient(clientURI);
             this.db = client.getDatabase(DBName);
-            System.out.println("Connected to MongoDB");
         } catch (MongoException e) {
             System.out.println("Error!" + e.getMessage());
         }

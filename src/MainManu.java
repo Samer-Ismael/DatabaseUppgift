@@ -1,13 +1,11 @@
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class MainManu {
-
 
     public void start() {
 
@@ -35,7 +33,7 @@ public class MainManu {
                 workerCRUDAsking(worker, workerCollection);
             }
             if (choice == 3) {
-                advancedSearch(customer, worker, customerCollection, workerCollection);
+                advancedSearch(customerCollection, workerCollection);
             }
             if (choice == 4) {
                 System.exit(0);
@@ -45,7 +43,7 @@ public class MainManu {
         }
     }
 
-    private void advancedSearch(Person customer, Person worker, MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
+    private void advancedSearch(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
 
         try {
             System.out.println("Enter search word: ");
@@ -53,8 +51,8 @@ public class MainManu {
             String search = scan.nextLine();
             Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
-            Document query = new Document();
-            query.put("$or", List.of(
+            Document doc = new Document();
+            doc.put("$or", List.of(
                     new Document("name", pattern),
                     new Document("address", pattern),
                     new Document("age", pattern),
@@ -62,21 +60,20 @@ public class MainManu {
                     new Document("employeeNumber", pattern)
             ));
 
-
-            FindIterable<Document> result = customerCollection.find(query);
+            FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
                 System.out.println("Customer: " + obj.toJson());
             }
 
-            FindIterable<Document> result2 = workerCollection.find(query);
+            FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
                 System.out.println("Worker: " + obj.toJson());
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
+
     // Methods for asking CRUD operations
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
         int CRUD = askCRUD();
@@ -176,4 +173,5 @@ public class MainManu {
             return 0;
         }
     }
+
 }
