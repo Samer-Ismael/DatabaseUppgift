@@ -105,6 +105,7 @@ public class Customer extends Person {
         } else {
             for (Customer customer : customerList) {
                 customer.print();
+                System.out.println("__________________________");
             }
         }
     }
@@ -141,6 +142,7 @@ public class Customer extends Person {
                 doc.getString("customerNumber")
         );
     }
+    @Override
     public Document toDoc() {
         return new Document("name", getName())
                 .append("address", getAddress())

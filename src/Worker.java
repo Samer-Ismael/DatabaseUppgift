@@ -116,8 +116,7 @@ public class Worker extends Person {
                 Document.parse(json).getString("name"),
                 Document.parse(json).getString("address"),
                 Document.parse(json).getString("age"),
-                Document.parse(json).getString("workerNumber"),
-                Document.parse(json).getString("_id")
+                Document.parse(json).getString("workerNumber")
                 );
     }
     @Override
@@ -125,8 +124,7 @@ public class Worker extends Person {
         Document worker = new Document("name", getName())
                 .append("address", getAddress())
                 .append("age", getAge())
-                .append("workerNumber", getWorkerNumber())
-                .append("_id", id);
+                .append("workerNumber", getWorkerNumber());
         return worker.toJson();
     }
     @Override
@@ -138,16 +136,14 @@ public class Worker extends Person {
                 doc.getString("name"),
                 doc.getString("address"),
                 doc.getString("age"),
-                doc.getString("workerNumber"),
-                doc.getString("_id"));
+                doc.getString("workerNumber"));
     }
     @Override
     public Document toDoc() {
         return new Document("name", getName())
                 .append("address", getAddress())
                 .append("age", getAge())
-                .append("workerNumber", getWorkerNumber())
-                .append("_id", id);
+                .append("workerNumber", getWorkerNumber());
     }
 
     @Override
