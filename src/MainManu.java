@@ -1,9 +1,11 @@
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import java.util.Scanner;
+
 public class MainManu {
 
-    private MongoDB mongoDB;
+    MongoDB mongoDB;
+
     public void start() {
 
         MongoDB mongoDB = new MongoDB("", "", "");
@@ -29,7 +31,7 @@ public class MainManu {
                 workerCRUDAsking(worker, workerCollection);
             }
             if (choice == 3) {
-                advancedSearchQuestions(customerCollection, workerCollection);
+                mongoDB.advancedSearchQuestions(customerCollection, workerCollection);
             }
             if (choice == 4) {
                 System.exit(0);
@@ -147,42 +149,4 @@ public class MainManu {
         }
     }
 
-    public void advancedSearchQuestions(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-        try {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("1. Search all over the database");
-            System.out.println("2. Search for name");
-            System.out.println("3. Search for address");
-            System.out.println("4. Search for age");
-            System.out.println("5. Search for customer number");
-            System.out.println("6. Search for worker number");
-            int choice = scanner.nextInt();
-            if (choice == 1) {
-                System.out.println("----------");
-                mongoDB.advancedSearchBananas(customerCollection, workerCollection);
-            }
-            if (choice == 2) {
-                System.out.println("----------");
-                mongoDB.advancedSearchByName(customerCollection, workerCollection);
-            }
-            if (choice == 3) {
-                System.out.println("----------");
-                mongoDB.advancedSearchAdress(customerCollection, workerCollection);
-            }
-            if (choice == 4) {
-                System.out.println("----------");
-                mongoDB.advancedSearchAge(customerCollection, workerCollection);
-            }
-            if (choice == 5) {
-                System.out.println("----------");
-                mongoDB.advancedSearchCustomerNumber(customerCollection);
-            }
-            if (choice == 6) {
-                System.out.println("----------");
-                mongoDB.advancedSearchWorkerNumber(workerCollection);
-            }
-        } catch (Exception e) {
-            System.out.println("Wrong input");
-        }
-    }
 }

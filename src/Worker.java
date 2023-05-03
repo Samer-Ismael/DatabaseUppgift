@@ -1,7 +1,6 @@
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-
 import java.util.ArrayList;
 
 public class Worker extends Person {
@@ -48,6 +47,7 @@ public class Worker extends Person {
             System.out.println("Worker already exists");
         }
     }
+
     @Override
     public void readFromDB(MongoCollection<Document> collection, String name) {
 
@@ -65,13 +65,11 @@ public class Worker extends Person {
             System.out.println("Worker not found");
         }
     }
+
     @Override
     public void updateDB(MongoCollection<Document> collection, Person worker) {
 
-        Document updateWorker = new Document("name", worker.getName())
-                .append("address", worker.getAddress())
-                .append("age", worker.getAge())
-                .append("employeeNumber", workerNumber);
+        Document updateWorker = new Document("name", worker.getName()).append("address", worker.getAddress()).append("age", worker.getAge()).append("employeeNumber", workerNumber);
         try {
             collection.updateOne(new Document("name", worker.getName()), new Document("$set", updateWorker));
             System.out.println("Worker updated");
@@ -79,6 +77,7 @@ public class Worker extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, String name) {
 
@@ -91,6 +90,7 @@ public class Worker extends Person {
         }
 
     }
+
     @Override
     public void allFromDB(MongoCollection<Document> collection) {
         FindIterable<Document> workers = collection.find();
@@ -107,23 +107,18 @@ public class Worker extends Person {
             }
         }
     }
+
     @Override
     public Person fromDoc(Document doc) {
         if (doc == null) {
             return new Worker("", "", 0, 0);
         }
-        return new Worker(
-                doc.getString("name"),
-                doc.getString("address"),
-                doc.getInteger("age"),
-                doc.getInteger("workerNumber"));
+        return new Worker(doc.getString("name"), doc.getString("address"), doc.getInteger("age"), doc.getInteger("workerNumber"));
     }
+
     @Override
     public Document toDoc() {
-        return new Document("name", getName())
-                .append("address", getAddress())
-                .append("age", getAge())
-                .append("workerNumber", getWorkerNumber());
+        return new Document("name", getName()).append("address", getAddress()).append("age", getAge()).append("workerNumber", getWorkerNumber());
     }
 
     @Override

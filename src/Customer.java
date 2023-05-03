@@ -1,7 +1,6 @@
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-
 import java.util.ArrayList;
 
 public class Customer extends Person {
@@ -47,6 +46,7 @@ public class Customer extends Person {
             System.out.println("Customer already exists");
         }
     }
+
     @Override
     public void readFromDB(MongoCollection<Document> collection, String name) {
 
@@ -64,13 +64,11 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     @Override
     public void updateDB(MongoCollection<Document> collection, Person customer) {
 
-        Document updateCustomer = new Document("name", customer.getName())
-                .append("adress", customer.getAddress())
-                .append("age", customer.getAge())
-                .append("customerNumber", customerNumber);
+        Document updateCustomer = new Document("name", customer.getName()).append("adress", customer.getAddress()).append("age", customer.getAge()).append("customerNumber", customerNumber);
         try {
             collection.updateOne(new Document("name", customer.getName()), new Document("$set", updateCustomer));
             System.out.println("Customer updated");
@@ -78,6 +76,7 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     @Override
     public void deleteFromDB(MongoCollection<Document> collection, String name) {
 
@@ -89,12 +88,13 @@ public class Customer extends Person {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     @Override
     public void allFromDB(MongoCollection<Document> collection) {
         FindIterable<Document> customers = collection.find();
         ArrayList<Customer> workerList = new ArrayList<>();
         for (Document Customer : customers) {
-            workerList.add((Customer) fromDoc(Customer));
+            workerList.add(fromDoc(Customer));
         }
         if (workerList.isEmpty()) {
             System.out.println("No workers found");
@@ -111,22 +111,16 @@ public class Customer extends Person {
         if (doc == null) {
             return new Customer("", "", 0, 0, "");
         }
-        return new Customer(
-                doc.getString("name"),
-                doc.getString("address"),
-                doc.getInteger("age"),
-                doc.getInteger("customerNumber")
-        );
+        return new Customer(doc.getString("name"), doc.getString("address"), doc.getInteger("age"), doc.getInteger("customerNumber"));
     }
+
     @Override
     public Document toDoc() {
-        return new Document("name", getName())
-                .append("address", getAddress())
-                .append("age", getAge())
-                .append("customerNumber", getCustomerNumber());
+        return new Document("name", getName()).append("address", getAddress()).append("age", getAge()).append("customerNumber", getCustomerNumber());
     }
+
     @Override
-    public void print( ) {
+    public void print() {
 
         System.out.println("Customer:");
         System.out.println("Name: " + getName());
