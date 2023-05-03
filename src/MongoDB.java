@@ -45,7 +45,6 @@ public class MongoDB {
         return db;
     }
 
-
     // Method to connect to the database
     private void connect() {
         String connection = "mongodb://" + server + ":" + port;

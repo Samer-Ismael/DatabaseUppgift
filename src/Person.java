@@ -5,9 +5,9 @@ public abstract class Person {
 
     private String name;
     private String address;
-    private int age;
+    private String age;
 
-    public Person(String name, String address, int age) {
+    public Person(String name, String address, String age) {
         this.name = name;
         this.address = address;
         this.age = age;
@@ -29,11 +29,11 @@ public abstract class Person {
         this.address = address;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -44,5 +44,10 @@ public abstract class Person {
     public abstract void updateDB(MongoCollection<Document> collection, Person person);
     public abstract void deleteFromDB(MongoCollection<Document> collection, String name);
     public abstract void allFromDB(MongoCollection<Document> collection);
+    public abstract Person fromJSON(String json);
+    public abstract String toJSON();
+    public abstract Person fromDoc (Document doc);
+    public abstract Document toDoc ();
+    public abstract void print ();
 
 }
