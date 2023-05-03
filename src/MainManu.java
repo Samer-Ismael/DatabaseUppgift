@@ -46,7 +46,7 @@ public class MainManu {
     private void advancedSearch(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
 
         try {
-            System.out.println("Enter search word: ");
+            System.out.println("Enter search word: \nYou can search for name, address, age, customerNumber and workerNumber");
             Scanner scan = new Scanner(System.in);
             String search = scan.nextLine();
             Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
@@ -54,10 +54,11 @@ public class MainManu {
             Document doc = new Document();
             doc.put("$or", List.of(
                     new Document("name", pattern),
-                    new Document("address", pattern),
+                    new Document("adress", pattern),
+                    new Document("email", pattern),
                     new Document("age", pattern),
                     new Document("customerNumber", pattern),
-                    new Document("employeeNumber", pattern)
+                    new Document("workerNumber", pattern)
             ));
 
             FindIterable<Document> result = customerCollection.find(doc);
@@ -86,6 +87,7 @@ public class MainManu {
             String name = scanner1.nextLine();
             worker.readFromDB(workerCollection, name);
         } else if (CRUD == 3) {
+            System.out.println("To update a worker, you need to enter the name of the worker you want to update\nAnd then enter the new information");
             worker = getWorkerInfo();
             worker.updateDB(workerCollection, worker);
         } else if (CRUD == 4) {
@@ -109,6 +111,7 @@ public class MainManu {
             String name = scanner1.nextLine();
             customer.readFromDB(customerCollection, name);
         } else if (CRUD == 3) {
+            System.out.println("To update a customer, you need to enter the name of the customer you want to update\nAnd then enter the new information");
             customer = getCustomerInfo();
             customer.updateDB(customerCollection, customer);
         } else if (CRUD == 4) {

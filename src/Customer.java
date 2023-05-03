@@ -61,7 +61,7 @@ public class Customer extends Person {
     public void updateDB(MongoCollection<Document> collection, Person customer) {
 
         Document updateCustomer = new Document("name", customer.getName())
-                .append("address", customer.getAddress())
+                .append("adress", customer.getAddress())
                 .append("age", customer.getAge())
                 .append("customerNumber", customerNumber);
         try {

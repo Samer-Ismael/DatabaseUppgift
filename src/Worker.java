@@ -29,7 +29,7 @@ public class Worker extends Person {
         }
 
         Document newWorker = new Document("name", worker.getName())
-                .append("address", worker.getAddress())
+                .append("adress", worker.getAddress())
                 .append("age", worker.getAge())
                 .append("workerNumber", workerNumber);
         try {
