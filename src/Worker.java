@@ -108,24 +108,6 @@ public class Worker extends Person {
         }
     }
     @Override
-    public Worker fromJSON(String json) {
-
-        return new Worker(
-                Document.parse(json).getString("name"),
-                Document.parse(json).getString("address"),
-                Document.parse(json).getInteger("age"),
-                Document.parse(json).getInteger("workerNumber")
-                );
-    }
-    @Override
-    public String toJSON() {
-        Document worker = new Document("name", getName())
-                .append("address", getAddress())
-                .append("age", getAge())
-                .append("workerNumber", getWorkerNumber());
-        return worker.toJson();
-    }
-    @Override
     public Person fromDoc(Document doc) {
         if (doc == null) {
             return new Worker("", "", 0, 0);

@@ -107,25 +107,6 @@ public class Customer extends Person {
     }
 
     @Override
-    public Customer fromJSON(String json) {
-
-        return new Customer(
-                Document.parse(json).getString("name"),
-                Document.parse(json).getString("address"),
-                Document.parse(json).getInteger("age"),
-                Document.parse(json).getInteger("customerNumber")
-        );
-    }
-    @Override
-    public String toJSON() {
-
-        Document customer = new Document("name", getName())
-                .append("address", getAddress())
-                .append("age", getAge())
-                .append("customerNumber", getCustomerNumber());
-        return customer.toJson();
-    }
-    @Override
     public Customer fromDoc(Document doc) {
         if (doc == null) {
             return new Customer("", "", 0, 0, "");

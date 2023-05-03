@@ -3,7 +3,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -11,12 +10,9 @@ import java.util.regex.Pattern;
 public class MongoDB {
 
     private MongoDatabase db;
-    private MongoCollection<Document> collection;
-    private String collectionName;
-    private MongoClient client;
-    private String DBName;
-    private String server;
-    private String port;
+    private final String DBName;
+    private final String server;
+    private final String port;
 
     private Person customer;
     private Person worker;
@@ -41,24 +37,12 @@ public class MongoDB {
         connect(); // Make connection when object is created
     }
 
-
-    // Getters and setters for the class
-    public String getCollectionName() {
-        return collectionName;
-    }
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
-    }
-    public MongoDatabase getDb() {
-        return db;
-    }
-
     // Method to connect to the database
     private void connect() {
         String connection = "mongodb://" + server + ":" + port;
         try {
             MongoClientURI clientURI = new MongoClientURI(connection);
-            this.client = new MongoClient(clientURI);
+            MongoClient client = new MongoClient(clientURI);
             this.db = client.getDatabase(DBName);
         } catch (MongoException e) {
             System.out.println("Error!" + e.getMessage());
@@ -72,7 +56,7 @@ public class MongoDB {
         } catch (Exception e) {
             // if collection already exists, we do nothing so no one gets hurt :)
         }
-        return this.collection = db.getCollection(collectionName);
+        return db.getCollection(collectionName);
     }
 
 

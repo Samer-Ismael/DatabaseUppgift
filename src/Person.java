@@ -44,8 +44,6 @@ public abstract class Person {
     public abstract void updateDB(MongoCollection<Document> collection, Person person);
     public abstract void deleteFromDB(MongoCollection<Document> collection, String name);
     public abstract void allFromDB(MongoCollection<Document> collection);
-    public abstract Person fromJSON(String json);
-    public abstract String toJSON();
     public abstract Person fromDoc (Document doc);
     public abstract Document toDoc ();
     public abstract void print ();

@@ -1,21 +1,14 @@
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
 public class MainManu {
 
-    private Person customer;
-    private Person worker;
     private MongoDB mongoDB;
-
     public void start() {
 
         MongoDB mongoDB = new MongoDB("", "", "");
-        this.customer = new Customer("", "", 0, 0);
-        this.worker = new Worker("", "", 0, 0);
+        Person customer = new Customer("", "", 0, 0);
+        Person worker = new Worker("", "", 0, 0);
         MongoCollection<Document> customerCollection = mongoDB.createCollection("customer");
         MongoCollection<Document> workerCollection = mongoDB.createCollection("worker");
 
@@ -45,7 +38,6 @@ public class MainManu {
             System.out.println("Wrong input");
         }
     }
-
 
     // Methods for asking CRUD operations
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
