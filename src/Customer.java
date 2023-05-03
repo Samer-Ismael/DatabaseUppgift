@@ -1,34 +1,31 @@
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 
 import java.util.ArrayList;
 
 public class Customer extends Person {
 
-    private String customerNumber;
+    private int customerNumber;
     private String id;
 
-
-    public Customer(String name, String address, String age, String customerNumber) {
+    public Customer(String name, String address, int age, int customerNumber) {
         super(name, address, age);
         this.customerNumber = customerNumber;
     }
 
-    public Customer(String name, String address, String age, String customerNumber, String id) {
+    public Customer(String name, String address, int age, int customerNumber, String id) {
         super(name, address, age);
         this.customerNumber = customerNumber;
         this.id = id;
     }
 
 
-
-    public String getCustomerNumber() {
+    public int getCustomerNumber() {
         return customerNumber;
     }
 
-    public void setCustomerNumber(String customerNumber) {
+    public void setCustomerNumber(int customerNumber) {
         this.customerNumber = customerNumber;
     }
 
@@ -95,17 +92,16 @@ public class Customer extends Person {
     @Override
     public void allFromDB(MongoCollection<Document> collection) {
         FindIterable<Document> customers = collection.find();
-
-        ArrayList<Customer> customerList = new ArrayList<>();
-        for (Document customer : customers) {
-            customerList.add(fromDoc(customer));
+        ArrayList<Customer> workerList = new ArrayList<>();
+        for (Document Customer : customers) {
+            workerList.add((Customer) fromDoc(Customer));
         }
-        if (customerList.isEmpty()) {
-            System.out.println("No customers found");
+        if (workerList.isEmpty()) {
+            System.out.println("No workers found");
         } else {
-            for (Customer customer : customerList) {
+            for (Customer customer : workerList) {
                 customer.print();
-                System.out.println("__________________________");
+                System.out.println("--------------------");
             }
         }
     }
@@ -117,8 +113,8 @@ public class Customer extends Person {
         return new Customer(
                 Document.parse(json).getString("name"),
                 Document.parse(json).getString("address"),
-                Document.parse(json).getString("age"),
-                Document.parse(json).getString("customerNumber")
+                Document.parse(json).getInteger("age"),
+                Document.parse(json).getInteger("customerNumber")
         );
     }
     @Override
@@ -133,13 +129,13 @@ public class Customer extends Person {
     @Override
     public Customer fromDoc(Document doc) {
         if (doc == null) {
-            return new Customer("", "", "", "");
+            return new Customer("", "", 0, 0);
         }
         return new Customer(
                 doc.getString("name"),
                 doc.getString("address"),
-                doc.getString("age"),
-                doc.getString("customerNumber")
+                doc.getInteger("age"),
+                doc.getInteger("customerNumber")
         );
     }
     @Override

@@ -13,8 +13,8 @@ public class MainManu {
     public void start() {
 
         MongoDB mongoDB = new MongoDB("", "", "");
-        this.customer = new Customer("", "", "", "");
-        this.worker = new Worker("", "", "", "");
+        this.customer = new Customer("", "", 0, 0);
+        this.worker = new Worker("", "", 0, 0);
         MongoCollection<Document> customerCollection = mongoDB.createCollection("customer");
         MongoCollection<Document> workerCollection = mongoDB.createCollection("worker");
 
@@ -49,7 +49,7 @@ public class MainManu {
 
         try {
             Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
+            int search = scan.nextInt();
             Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
             Document doc = new Document();
@@ -58,7 +58,7 @@ public class MainManu {
             ));
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
+                worker = new Worker("", "", 0, 0, "");
                 worker = worker.fromDoc(obj);
                 worker.print();
                 System.out.println("------------------------------------------");
@@ -72,7 +72,7 @@ public class MainManu {
 
         try {
             Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
+            int search = scan.nextInt();
             Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
 
             Document doc = new Document();
@@ -81,7 +81,7 @@ public class MainManu {
             ));
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
-                customer = new Customer("", "", "", "", "");
+                customer = new Customer("", "", 0, 0, "");
                 customer = customer.fromDoc(obj);
                 customer.print();
                 System.out.println("------------------------------------------");
@@ -104,14 +104,14 @@ public class MainManu {
             ));
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
-                customer = new Customer("", "", "", "", "");                customer = customer.fromDoc(obj);
+                customer = new Customer("", "", 0, 0, "");                customer = customer.fromDoc(obj);
                 customer.print();
                 System.out.println("------------------------------------------");
             }
 
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
+                worker = new Worker("", "", 0, 0, "");
                 worker = worker.fromDoc(obj);
                 worker.print();
                 System.out.println("------------------------------------------");
@@ -134,44 +134,14 @@ public class MainManu {
             ));
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
-                customer = new Customer("", "", "", "", "");
+                customer = new Customer("", "", 0, 0, "");
                 customer = customer.fromDoc(obj);
                 customer.print();
                 System.out.println("------------------------------------------");
             }
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchEmail(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("email", pattern)
-            ));
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", "", "", "");
-                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
+                worker = new Worker("", "", 0, 0, "");
                 worker = worker.fromDoc(obj);
                 worker.print();
                 System.out.println("------------------------------------------");
@@ -194,7 +164,7 @@ public class MainManu {
 
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
-                customer = new Customer("", "", "", "", "");
+                customer = new Customer("", "", 0, 0, "");
                 customer = customer.fromDoc(obj);
                 customer.print();
                 System.out.println("------------------------------------------");
@@ -202,7 +172,7 @@ public class MainManu {
 
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
+                worker = new Worker("", "", 0, 0, "");
                 worker = worker.fromDoc(obj);
                 worker.print();
                 System.out.println("------------------------------------------");
@@ -231,7 +201,7 @@ public class MainManu {
 
             FindIterable<Document> result = customerCollection.find(doc);
             for (Document obj : result) {
-                customer = new Customer("", "", "", "");
+                customer = new Customer("", "", 0, 0, "");
                 customer = customer.fromDoc(obj);
                 customer.print();
                 System.out.println("------------------------------------------");
@@ -239,7 +209,7 @@ public class MainManu {
 
             FindIterable<Document> result2 = workerCollection.find(doc);
             for (Document obj : result2) {
-                worker = new Worker("", "", "", "", "");
+                worker = new Worker("", "", 0, 0, "");
                 worker = worker.fromDoc(obj);
                 worker.print();
                 System.out.println("------------------------------------------");
@@ -253,7 +223,7 @@ public class MainManu {
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
         int CRUD = askCRUD();
         if (CRUD == 1) {
-            worker = getWorkerInfo();
+            worker = getWorkerInfoFromUser();
             worker.addToDB(workerCollection, worker);
         } else if (CRUD == 2) {
             Scanner scanner1 = new Scanner(System.in);
@@ -262,7 +232,7 @@ public class MainManu {
             worker.readFromDB(workerCollection, name);
         } else if (CRUD == 3) {
             System.out.println("To update a worker, you need to enter the name of the worker you want to update\nAnd then enter the new information");
-            worker = getWorkerInfo();
+            worker = getWorkerInfoFromUser();
             worker.updateDB(workerCollection, worker);
         } else if (CRUD == 4) {
             Scanner scanner1 = new Scanner(System.in);
@@ -279,7 +249,7 @@ public class MainManu {
     private void customerCRUDAsking(Person customer, MongoCollection<Document> customerCollection) {
         int CRUD = askCRUD();
         if (CRUD == 1) {
-            customer = getCustomerInfo();
+            customer = getCustomerInfoFromUser();
             customer.addToDB(customerCollection, customer);
         } else if (CRUD == 2) {
             Scanner scanner1 = new Scanner(System.in);
@@ -288,7 +258,7 @@ public class MainManu {
             customer.readFromDB(customerCollection, name);
         } else if (CRUD == 3) {
             System.out.println("To update a customer, you need to enter the name of the customer you want to update\nAnd then enter the new information");
-            customer = getCustomerInfo();
+            customer = getCustomerInfoFromUser();
             customer.updateDB(customerCollection, customer);
         } else if (CRUD == 4) {
             Scanner scanner1 = new Scanner(System.in);
@@ -302,7 +272,7 @@ public class MainManu {
     }
 
     // Method for building object of Customer class from user input
-    public Customer getCustomerInfo() {
+    public Customer getCustomerInfoFromUser() {
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter name: ");
@@ -310,9 +280,9 @@ public class MainManu {
             System.out.println("Enter address: ");
             String address = scanner.nextLine();
             System.out.println("Enter age: ");
-            String age = scanner.nextLine();
+            int age = scanner.nextInt();
             System.out.println("Enter customer number: ");
-            String customerNumber = scanner.nextLine();
+            int customerNumber = scanner.nextInt();
             return new Customer(name, address, age, customerNumber);
         } catch (Exception e) {
             System.out.println("Wrong input");
@@ -321,7 +291,7 @@ public class MainManu {
     }
 
     // Method for building object of Worker class from user input
-    public Worker getWorkerInfo() {
+    public Worker getWorkerInfoFromUser() {
         try {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter name: ");
@@ -329,9 +299,9 @@ public class MainManu {
             System.out.println("Enter address: ");
             String address = scanner.nextLine();
             System.out.println("Enter age: ");
-            String age = scanner.nextLine();
-            System.out.println("Enter employee number: ");
-            String workerNumber = scanner.nextLine();
+            int age = scanner.nextInt();
+            System.out.println("Enter worker number: ");
+            int workerNumber = scanner.nextInt();
             return new Worker(name, address, age, workerNumber);
         } catch (Exception e) {
             System.out.println("Wrong input");
@@ -364,9 +334,8 @@ public class MainManu {
             System.out.println("2. Search for name");
             System.out.println("3. Search for address");
             System.out.println("4. Search for age");
-            System.out.println("5. Search for email");
-            System.out.println("6. Search for customer number");
-            System.out.println("7. Search for worker number");
+            System.out.println("5. Search for customer number");
+            System.out.println("6. Search for worker number");
             int choice = scanner.nextInt();
             if (choice == 1) {
                 System.out.println("----------");
@@ -386,13 +355,9 @@ public class MainManu {
             }
             if (choice == 5) {
                 System.out.println("----------");
-                advancedSearchEmail(customerCollection, workerCollection);
-            }
-            if (choice == 6) {
-                System.out.println("----------");
                 advancedSearchCustomerNumber(customerCollection);
             }
-            if (choice == 7) {
+            if (choice == 6) {
                 System.out.println("----------");
                 advancedSearchWorkerNumber(workerCollection);
             }

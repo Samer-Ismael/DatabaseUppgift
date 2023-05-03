@@ -1,34 +1,32 @@
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 
 import java.util.ArrayList;
 
 public class Worker extends Person {
 
-    private String workerNumber;
+    private int workerNumber;
     private String id;
 
 
-    public Worker(String name, String address, String age, String employeeNumber) {
+    public Worker(String name, String address, int age, int workerNumber) {
         super(name, address, age);
-        this.workerNumber = employeeNumber;
+        this.workerNumber = workerNumber;
     }
 
-    public Worker(String name, String address, String age, String employeeNumber, String id) {
+    public Worker(String name, String address, int age, int workerNumber, String id) {
         super(name, address, age);
-        this.workerNumber = employeeNumber;
+        this.workerNumber = workerNumber;
         this.id = id;
     }
 
 
-
-    public String getWorkerNumber() {
+    public int getWorkerNumber() {
         return workerNumber;
     }
 
-    public void setWorkerNumber(String workerNumber) {
+    public void setWorkerNumber(int workerNumber) {
         this.workerNumber = workerNumber;
     }
 
@@ -115,8 +113,8 @@ public class Worker extends Person {
         return new Worker(
                 Document.parse(json).getString("name"),
                 Document.parse(json).getString("address"),
-                Document.parse(json).getString("age"),
-                Document.parse(json).getString("workerNumber")
+                Document.parse(json).getInteger("age"),
+                Document.parse(json).getInteger("workerNumber")
                 );
     }
     @Override
@@ -130,13 +128,13 @@ public class Worker extends Person {
     @Override
     public Person fromDoc(Document doc) {
         if (doc == null) {
-            return new Worker("", "", "", "", "");
+            return new Worker("", "", 0, 0);
         }
         return new Worker(
                 doc.getString("name"),
                 doc.getString("address"),
-                doc.getString("age"),
-                doc.getString("workerNumber"));
+                doc.getInteger("age"),
+                doc.getInteger("workerNumber"));
     }
     @Override
     public Document toDoc() {

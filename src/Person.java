@@ -5,9 +5,9 @@ public abstract class Person {
 
     private String name;
     private String address;
-    private String age;
+    private int age;
 
-    public Person(String name, String address, String age) {
+    public Person(String name, String address, int age) {
         this.name = name;
         this.address = address;
         this.age = age;
@@ -29,11 +29,11 @@ public abstract class Person {
         this.address = address;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
