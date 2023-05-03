@@ -106,7 +106,6 @@ public class Customer extends Person {
         }
     }
 
-
     @Override
     public Customer fromJSON(String json) {
 
@@ -129,7 +128,7 @@ public class Customer extends Person {
     @Override
     public Customer fromDoc(Document doc) {
         if (doc == null) {
-            return new Customer("", "", 0, 0);
+            return new Customer("", "", 0, 0, "");
         }
         return new Customer(
                 doc.getString("name"),
@@ -145,7 +144,6 @@ public class Customer extends Person {
                 .append("age", getAge())
                 .append("customerNumber", getCustomerNumber());
     }
-
     @Override
     public void print( ) {
 

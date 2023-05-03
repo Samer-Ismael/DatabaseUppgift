@@ -9,6 +9,7 @@ public class MainManu {
 
     private Person customer;
     private Person worker;
+    private MongoDB mongoDB;
 
     public void start() {
 
@@ -45,179 +46,6 @@ public class MainManu {
         }
     }
 
-    private void advancedSearchWorkerNumber(MongoCollection<Document> workerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("workerNumber", pattern)
-            ));
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", 0, 0, "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchCustomerNumber(MongoCollection<Document> customerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("customerNumber", pattern)
-            ));
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", 0, 0, "");
-                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchAdress(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("adress", pattern)
-            ));
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", 0, 0, "");                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", 0, 0, "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchAge(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            int search = scan.nextInt();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("age", pattern)
-            ));
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", 0, 0, "");
-                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", 0, 0, "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchByName(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-        try {
-            Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("name", pattern)
-            ));
-
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", 0, 0, "");
-                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", 0, 0, "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    private void advancedSearchBananas(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
-
-        try {
-            Scanner scan = new Scanner(System.in);
-            String search = scan.nextLine();
-            Pattern pattern = Pattern.compile(".*" + search + ".*", Pattern.CASE_INSENSITIVE);
-
-            Document doc = new Document();
-            doc.put("$or", List.of(
-                    new Document("name", pattern),
-                    new Document("adress", pattern),
-                    new Document("email", pattern),
-                    new Document("age", pattern),
-                    new Document("customerNumber", pattern),
-                    new Document("workerNumber", pattern)
-            ));
-
-            FindIterable<Document> result = customerCollection.find(doc);
-            for (Document obj : result) {
-                customer = new Customer("", "", 0, 0, "");
-                customer = customer.fromDoc(obj);
-                customer.print();
-                System.out.println("------------------------------------------");
-            }
-
-            FindIterable<Document> result2 = workerCollection.find(doc);
-            for (Document obj : result2) {
-                worker = new Worker("", "", 0, 0, "");
-                worker = worker.fromDoc(obj);
-                worker.print();
-                System.out.println("------------------------------------------");
-            }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
 
     // Methods for asking CRUD operations
     private void workerCRUDAsking(Person worker, MongoCollection<Document> workerCollection) {
@@ -339,27 +167,27 @@ public class MainManu {
             int choice = scanner.nextInt();
             if (choice == 1) {
                 System.out.println("----------");
-                advancedSearchBananas(customerCollection, workerCollection);
+                mongoDB.advancedSearchBananas(customerCollection, workerCollection);
             }
             if (choice == 2) {
                 System.out.println("----------");
-                advancedSearchByName(customerCollection, workerCollection);
+                mongoDB.advancedSearchByName(customerCollection, workerCollection);
             }
             if (choice == 3) {
                 System.out.println("----------");
-                advancedSearchAdress(customerCollection, workerCollection);
+                mongoDB.advancedSearchAdress(customerCollection, workerCollection);
             }
             if (choice == 4) {
                 System.out.println("----------");
-                advancedSearchAge(customerCollection, workerCollection);
+                mongoDB.advancedSearchAge(customerCollection, workerCollection);
             }
             if (choice == 5) {
                 System.out.println("----------");
-                advancedSearchCustomerNumber(customerCollection);
+                mongoDB.advancedSearchCustomerNumber(customerCollection);
             }
             if (choice == 6) {
                 System.out.println("----------");
-                advancedSearchWorkerNumber(workerCollection);
+                mongoDB.advancedSearchWorkerNumber(workerCollection);
             }
         } catch (Exception e) {
             System.out.println("Wrong input");
