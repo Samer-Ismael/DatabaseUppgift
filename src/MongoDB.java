@@ -5,7 +5,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-
 public class MongoDB {
 
     private MongoDatabase db;
@@ -15,10 +14,6 @@ public class MongoDB {
     private final String DBName;
     private final String server;
     private final String port;
-
-    private Person customer;
-    private Person worker;
-
 
     // Constructor with default values
     public MongoDB(String DBName, String server, String port) {

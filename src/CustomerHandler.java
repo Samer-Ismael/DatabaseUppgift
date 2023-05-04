@@ -5,7 +5,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CustomerHandler extends PersonHandler{
+public class CustomerHandler extends PersonHandler {
 
     private int customerNumber;
 
@@ -15,14 +15,14 @@ public class CustomerHandler extends PersonHandler{
         try {
             var find = collection.find(newCustomer);
             if (find.first() != null) {
-                System.out.println("Customer already exists");
+                System.out.println("MongoDBFacade.Customer already exists");
             } else {
                 collection.insertOne(newCustomer);
-                System.out.println("Customer added");
+                System.out.println("MongoDBFacade.Customer added");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            System.out.println("Customer already exists");
+            System.out.println("MongoDBFacade.Customer already exists");
         }
     }
 
@@ -51,7 +51,7 @@ public class CustomerHandler extends PersonHandler{
         Document updateCustomer = new Document("name", customer.getName()).append("adress", customer.getAddress()).append("age", customer.getAge()).append("customerNumber", customerNumber);
         try {
             collection.updateOne(new Document("name", customer.getName()), new Document("$set", updateCustomer));
-            System.out.println("Customer updated");
+            System.out.println("MongoDBFacade.Customer updated");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -63,7 +63,7 @@ public class CustomerHandler extends PersonHandler{
         Document deleteCustomer = new Document("name", name);
         try {
             collection.deleteOne(deleteCustomer);
-            System.out.println("Customer deleted");
+            System.out.println("MongoDBFacade.Customer deleted");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

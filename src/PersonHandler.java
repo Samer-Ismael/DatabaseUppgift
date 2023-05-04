@@ -21,8 +21,6 @@ public abstract class PersonHandler {
 
 
 
-
-
     public void advancedSearchAdress(MongoCollection<Document> customerCollection, MongoCollection<Document> workerCollection) {
 
         try {

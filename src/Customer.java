@@ -1,4 +1,3 @@
-
 import org.bson.Document;
 
 public class Customer extends Person {
@@ -49,12 +48,11 @@ public class Customer extends Person {
     @Override
     public void print() {
 
-        System.out.println("Customer:");
+        System.out.println("MongoDBFacade.Customer:");
         System.out.println("Name: " + getName());
         System.out.println("Address: " + getAddress());
         System.out.println("Age: " + getAge());
-        System.out.println("Customer number: " + getCustomerNumber());
+        System.out.println("MongoDBFacade.Customer number: " + getCustomerNumber());
     }
-
-
 }
+

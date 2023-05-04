@@ -1,12 +1,6 @@
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoException;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
 import com.mongodb.client.*;
 import org.bson.Document;
 
-import java.util.ArrayList;
 public class MongoDBFacade {
 
     // Jag försökte att koppla till databas på detta sätt men jag lyckades inte få det fungera.
@@ -35,7 +29,8 @@ public class MongoDBFacade {
         this.conn = conn;
 
     }
-    public MongoDBFacade(){
+
+    public MongoDBFacade() {
 
         //connect();
     }
@@ -56,4 +51,5 @@ public class MongoDBFacade {
     }
 
  */
+
 }

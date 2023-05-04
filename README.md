@@ -5,7 +5,7 @@ Projektet är ett program som sparar personer i en MongoDB-databas och kan ändr
 
 Databasen är en lokal databas som ansluts med en standard-anslutningssträng till server och port, samt ett standard DB-namn om användaren inte har eller vill ange det.
 
-Personklassen är en abstrakt klass som har två subklasser: Customer och Worker. Eftersom det finns många metoder som ska användas i båda subklasserna, har jag också lagt till abstrakta metoder i Personklassen för att underlätta hantering och se till att alla metoder är @Override i underklasserna.
+Personklassen är en abstrakt klass som har två subklasser: MongoDBFacade.Customer och Worker. Eftersom det finns många metoder som ska användas i båda subklasserna, har jag också lagt till abstrakta metoder i Personklassen för att underlätta hantering och se till att alla metoder är @Override i underklasserna.
 
 Jag använder en lokal MongoDB-databas med två samlingar (customer och worker) för att spara alla personer baserat på deras information, beroende på om de är arbetare eller kunder.
 

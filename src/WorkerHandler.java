@@ -4,7 +4,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class WorkerHandler extends PersonHandler{
+public class WorkerHandler extends PersonHandler {
 
     private int workerNumber;
     @Override
