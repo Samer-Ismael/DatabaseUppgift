@@ -1,4 +1,3 @@
-import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 public abstract class Person {
@@ -38,21 +37,11 @@ public abstract class Person {
     }
 
 
-    // Abstract methods for the subclasses to implement
-    public abstract void moveToDB(MongoCollection<Document> collection, Person person);
-
-    public abstract void getFromDB(MongoCollection<Document> collection, String name);
-
-    public abstract void updateInDB(MongoCollection<Document> collection, Person person);
-
-    public abstract void deleteFromDB(MongoCollection<Document> collection, String name);
-
-    public abstract void allFromDB(MongoCollection<Document> collection);
-
     public abstract Person fromDoc(Document doc);
 
     public abstract Document toDoc();
 
     public abstract void print();
+
 
 }
