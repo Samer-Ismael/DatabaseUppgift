@@ -31,7 +31,7 @@ public class Customer extends Person {
 
     // Methods from the abstract class Person
     @Override
-    public void addToDB(MongoCollection<Document> collection, Person customer) {
+    public void moveToDB(MongoCollection<Document> collection, Person customer) {
         Document newCustomer = new Document(customer.toDoc());
         try {
             var find = collection.find(newCustomer);
@@ -48,7 +48,7 @@ public class Customer extends Person {
     }
 
     @Override
-    public void readFromDB(MongoCollection<Document> collection, String name) {
+    public void getFromDB(MongoCollection<Document> collection, String name) {
 
         try {
             FindIterable<Document> customers = collection.find(new Document("name", name));
@@ -66,7 +66,7 @@ public class Customer extends Person {
     }
 
     @Override
-    public void updateDB(MongoCollection<Document> collection, Person customer) {
+    public void updateInDB(MongoCollection<Document> collection, Person customer) {
 
         Document updateCustomer = new Document("name", customer.getName()).append("adress", customer.getAddress()).append("age", customer.getAge()).append("customerNumber", customerNumber);
         try {

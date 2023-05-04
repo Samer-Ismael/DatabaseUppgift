@@ -46,21 +46,21 @@ public class MainManu {
         int CRUD = askCRUD();
         if (CRUD == 1) {
             worker = getWorkerInfoFromUser();
-            worker.addToDB(workerCollection, worker);
+            worker.moveToDB(workerCollection, worker);
         } else if (CRUD == 2) {
             Scanner scanner1 = new Scanner(System.in);
             System.out.println("Enter name: ");
             String name = scanner1.nextLine();
-            worker.readFromDB(workerCollection, name);
+            worker.getFromDB(workerCollection, name);
         } else if (CRUD == 3) {
             System.out.println("To update a worker, you need to enter the name of the worker you want to update\nAnd then enter the new information");
             worker = getWorkerInfoFromUser();
-            worker.updateDB(workerCollection, worker);
+            worker.updateInDB(workerCollection, worker);
         } else if (CRUD == 4) {
             Scanner scanner1 = new Scanner(System.in);
             System.out.println("Enter name: ");
             String name = scanner1.nextLine();
-            worker.readFromDB(workerCollection, name);
+            worker.getFromDB(workerCollection, name);
             worker.deleteFromDB(workerCollection, name);
         } else if (CRUD == 5) {
             worker.allFromDB(workerCollection);
@@ -72,21 +72,21 @@ public class MainManu {
         int CRUD = askCRUD();
         if (CRUD == 1) {
             customer = getCustomerInfoFromUser();
-            customer.addToDB(customerCollection, customer);
+            customer.moveToDB(customerCollection, customer);
         } else if (CRUD == 2) {
             Scanner scanner1 = new Scanner(System.in);
             System.out.println("Enter name: ");
             String name = scanner1.nextLine();
-            customer.readFromDB(customerCollection, name);
+            customer.getFromDB(customerCollection, name);
         } else if (CRUD == 3) {
             System.out.println("To update a customer, you need to enter the name of the customer you want to update\nAnd then enter the new information");
             customer = getCustomerInfoFromUser();
-            customer.updateDB(customerCollection, customer);
+            customer.updateInDB(customerCollection, customer);
         } else if (CRUD == 4) {
             Scanner scanner1 = new Scanner(System.in);
             System.out.println("Enter name: ");
             String name = scanner1.nextLine();
-            customer.readFromDB(customerCollection, name);
+            customer.getFromDB(customerCollection, name);
             customer.deleteFromDB(customerCollection, name);
         } else if (CRUD == 5) {
             customer.allFromDB(customerCollection);
