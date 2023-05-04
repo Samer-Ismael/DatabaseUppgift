@@ -32,12 +32,18 @@ public class Customer extends Person {
         if (doc == null) {
             return new Customer("", "", 0, 0, "");
         }
-        return new Customer(doc.getString("name"), doc.getString("address"), doc.getInteger("age"), doc.getInteger("customerNumber"));
+        return new Customer(doc.getString("name"),
+                doc.getString("address"),
+                doc.getInteger("age"),
+                doc.getInteger("customerNumber"));
     }
 
     @Override
     public Document toDoc() {
-        return new Document("name", getName()).append("address", getAddress()).append("age", getAge()).append("customerNumber", getCustomerNumber());
+        return new Document("name", getName())
+                .append("address", getAddress())
+                .append("age", getAge())
+                .append("customerNumber", getCustomerNumber());
     }
 
     @Override

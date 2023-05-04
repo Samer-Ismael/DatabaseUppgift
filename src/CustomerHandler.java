@@ -3,6 +3,7 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class CustomerHandler extends PersonHandler{
 
@@ -86,6 +87,25 @@ public class CustomerHandler extends PersonHandler{
         }
     }
 
+
+    public void advancedSearchCustomerNumber(MongoCollection<Document> customerCollection) {
+
+        try {
+            Scanner scan = new Scanner(System.in);
+            int search = scan.nextInt();
+
+            Document doc = new Document("customerNumber", search);
+            FindIterable<Document> result = customerCollection.find(doc);
+            for (Document obj : result) {
+                Person customer = new Customer("", "", 0, 0, "");
+                customer = customer.fromDoc(obj);
+                customer.print();
+                System.out.println("------------------------------------------");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
 
 }

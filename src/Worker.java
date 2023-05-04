@@ -27,11 +27,17 @@ public class Worker extends Person {
         if (doc == null) {
             return new Worker("", "", 0, 0);
         }
-        return new Worker(doc.getString("name"), doc.getString("address"), doc.getInteger("age"), doc.getInteger("workerNumber"));
+        return new Worker(doc.getString("name"),
+                doc.getString("address"),
+                doc.getInteger("age"),
+                doc.getInteger("workerNumber"));
     }
     @Override
     public Document toDoc() {
-        return new Document("name", getName()).append("address", getAddress()).append("age", getAge()).append("workerNumber", getWorkerNumber());
+        return new Document("name", getName())
+                .append("address", getAddress())
+                .append("age", getAge())
+                .append("workerNumber", getWorkerNumber());
     }
     @Override
     public void print() {

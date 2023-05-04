@@ -2,6 +2,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class WorkerHandler extends PersonHandler{
 
@@ -88,6 +89,24 @@ public class WorkerHandler extends PersonHandler{
     }
 
 
+    public void advancedSearchWorkerNumber(MongoCollection<Document> workerCollection) {
+
+        try {
+            Scanner scan = new Scanner(System.in);
+            int search = scan.nextInt();
+            Document doc = new Document("workerNumber",search);
+
+            FindIterable<Document> result2 = workerCollection.find(doc);
+            for (Document obj : result2) {
+                Person worker = new Worker("", "", 0, 0, "");
+                worker = worker.fromDoc(obj);
+                worker.print();
+                System.out.println("------------------------------------------");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
 
 
